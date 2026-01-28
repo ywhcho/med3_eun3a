@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - 게시판{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>게시글 상세</h2>
+            <a href="{% url 'board:list' %}" class="btn btn-secondary">목록으로</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-light">
+                <h4>{{ post.title }}</h4>
+                <div class="text-muted small">
+                    작성자: {{ post.author.username }} | 작성일: {{ post.created_at|date:"Y-m-d H:i" }} | 조회수: {{ post.views }}
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="min-height: 200px; white-space: pre-wrap;">{{ post.content }}</div>
+            </div>
+            <div class="card-footer bg-light">
+                {% if user == post.author %}
+                <a href="{% url 'board:update' post.pk %}" class="btn btn-warning">수정</a>
+                <a href="{% url 'board:delete' post.pk %}" class="btn btn-danger">삭제</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

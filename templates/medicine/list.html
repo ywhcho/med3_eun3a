@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}의약정보 보기{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h2>의약정보 보기</h2>
+        <p class="text-muted">성분명, 회사명, 효능별로 의약품을 검색하실 수 있습니다.</p>
+    </div>
+</div>
+
+<!-- 검색 폼 -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="get" class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">검색 유형</label>
+                        <select name="search_type" class="form-select">
+                            <option value="">전체</option>
+                            <option value="성분명" {% if search_type == '성분명' %}selected{% endif %}>성분명</option>
+                            <option value="회사명" {% if search_type == '회사명' %}selected{% endif %}>회사명</option>
+                            <option value="효능" {% if search_type == '효능' %}selected{% endif %}>효능</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">검색어</label>
+                        <input type="text" name="search" class="form-control" value="{{ search_query }}" placeholder="검색어를 입력하세요">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">&nbsp;</label>
+                        <button type="submit" class="btn btn-primary w-100">검색</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 의약품 목록 -->
+<div class="row">
+    <div class="col-md-12">
+        {% if page_obj %}
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>약품명</th>
+                                <th>성분명</th>
+                                <th>회사명</th>
+                                <th>등록일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for medicine in page_obj %}
+                            <tr onclick="location.href='{% url 'medicine:detail' medicine.pk %}'" style="cursor: pointer;">
+                                <td>{{ medicine.약품명 }}</td>
+                                <td>{{ medicine.성분명 }}</td>
+                                <td>{{ medicine.회사명 }}</td>
+                                <td>{{ medicine.created_at|date:"Y-m-d" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이지네이션 -->
+        {% if page_obj.has_other_pages %}
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_type %}&search_type={{ search_type }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">이전</a>
+                </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}{% if search_type %}&search_type={{ search_type }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_type %}&search_type={{ search_type }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">다음</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        {% else %}
+        <div class="alert alert-info">등록된 의약품이 없습니다.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
