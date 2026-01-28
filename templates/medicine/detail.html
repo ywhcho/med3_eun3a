@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ medicine.약품명 }} - 의약정보{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>의약품 상세 정보</h2>
+            <a href="{% url 'medicine:list' %}" class="btn btn-secondary">목록으로</a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="width: 20%;" class="table-light">약품명</th>
+                            <td>{{ medicine.약품명 }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light">성분명</th>
+                            <td>{{ medicine.성분명 }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light">회사명</th>
+                            <td>{{ medicine.회사명 }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light">용량</th>
+                            <td>{{ medicine.용량 }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light">효능</th>
+                            <td style="white-space: pre-wrap;">{{ medicine.효능 }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light">주의사항</th>
+                            <td style="white-space: pre-wrap;">{{ medicine.주의사항 }}</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light">등록일</th>
+                            <td>{{ medicine.created_at|date:"Y년 m월 d일 H:i" }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

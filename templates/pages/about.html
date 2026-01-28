@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">About Us</h1>
+                <div class="text-center mb-4">
+                    <h3 class="text-primary">의약품 안전사용 전문회사</h3>
+                </div>
+                <hr>
+                <div class="mt-4">
+                    <h4>우리의 비전</h4>
+                    <p class="lead">
+                        우리는 정확하고 신뢰할 수 있는 의약품 정보를 제공하여 
+                        국민의 건강과 안전을 지키는데 기여합니다.
+                    </p>
+                </div>
+                <div class="mt-4">
+                    <h4>주요 서비스</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>의약품 정보 제공:</strong> 성분명, 효능, 용량, 주의사항 등 상세한 의약품 정보
+                        </li>
+                        <li class="list-group-item">
+                            <strong>검색 시스템:</strong> 성분별, 회사별, 효능별 다양한 검색 기능
+                        </li>
+                        <li class="list-group-item">
+                            <strong>정보 공유:</strong> 의약품에 관한 질문과 정보를 공유할 수 있는 게시판
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-4">
+                    <h4>문의하기</h4>
+                    <p>
+                        의약품 정보에 대한 문의사항이 있으시면 게시판을 통해 질문해주세요.<br>
+                        전문가들이 신속하고 정확하게 답변드리겠습니다.
+                    </p>
+                    <div class="text-center mt-4">
+                        <a href="{% url 'board:list' %}" class="btn btn-primary btn-lg">게시판 바로가기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

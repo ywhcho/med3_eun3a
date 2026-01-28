@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}홈 - 의약정보 관리 시스템{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron bg-light p-5 rounded">
+            <h1 class="display-4">의약정보 관리 시스템</h1>
+            <p class="lead">의약품에 대한 정확한 정보를 제공하는 전문 웹사이트입니다.</p>
+            <hr class="my-4">
+            <p>성분별, 회사별, 효능별로 의약품을 검색하고 상세한 정보를 확인하실 수 있습니다.</p>
+            <a class="btn btn-primary btn-lg" href="{% url 'medicine:list' %}" role="button">의약정보 보기</a>
+            <a class="btn btn-secondary btn-lg" href="{% url 'board:list' %}" role="button">게시판</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">의약정보 검색</h5>
+                <p class="card-text">성분명, 회사명, 효능별로 의약품을 검색할 수 있습니다.</p>
+                <a href="{% url 'medicine:list' %}" class="btn btn-primary">바로가기</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">게시판</h5>
+                <p class="card-text">의약품에 관한 질문과 정보를 공유할 수 있습니다.</p>
+                <a href="{% url 'board:list' %}" class="btn btn-primary">바로가기</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">About Us</h5>
+                <p class="card-text">의약품 안전사용 전문회사에 대해 알아보세요.</p>
+                <a href="{% url 'pages:about' %}" class="btn btn-primary">바로가기</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
