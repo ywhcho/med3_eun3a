@@ -8,17 +8,25 @@ from django.contrib.auth.models import User
 from medicine.models import Medicine
 from board.models import Post
 
+print("=" * 50)
+print("⚠️  WARNING: This script is for DEVELOPMENT ONLY!")
+print("⚠️  Do NOT run this in production environments!")
+print("=" * 50)
+
 # Create superuser
 if not User.objects.filter(username='admin').exists():
     User.objects.create_superuser('admin', 'admin@test.com', 'admin123')
-    print('Superuser created: admin / admin123')
+    print('✓ Superuser created: admin / admin123')
+else:
+    print('ℹ Superuser "admin" already exists')
 
 # Create test user
 if not User.objects.filter(username='testuser').exists():
     test_user = User.objects.create_user('testuser', 'test@test.com', 'test123')
-    print('Test user created: testuser / test123')
+    print('✓ Test user created: testuser / test123')
 else:
     test_user = User.objects.get(username='testuser')
+    print('ℹ Test user "testuser" already exists')
 
 # Create sample medicines
 medicines_data = [
@@ -122,11 +130,14 @@ medicines_data = [
 
 created_count = 0
 for data in medicines_data:
-    if not Medicine.objects.filter(약품명=data['약품명']).exists():
-        Medicine.objects.create(**data)
-        created_count += 1
+    try:
+        if not Medicine.objects.filter(약품명=data['약품명']).exists():
+            Medicine.objects.create(**data)
+            created_count += 1
+    except Exception as e:
+        print(f'✗ Error creating medicine {data["약품명"]}: {e}')
 
-print(f'{created_count} medicines created')
+print(f'✓ {created_count} medicines created')
 
 # Create sample board posts
 posts_data = [
@@ -149,9 +160,12 @@ posts_data = [
 
 created_posts = 0
 for data in posts_data:
-    if not Post.objects.filter(title=data['title']).exists():
-        Post.objects.create(**data)
-        created_posts += 1
+    try:
+        if not Post.objects.filter(title=data['title']).exists():
+            Post.objects.create(**data)
+            created_posts += 1
+    except Exception as e:
+        print(f'✗ Error creating post {data["title"]}: {e}')
 
-print(f'{created_posts} posts created')
-print('\nSample data creation completed!')
+print(f'✓ {created_posts} posts created')
+print('\n✅ Sample data creation completed!')

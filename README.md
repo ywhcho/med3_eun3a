@@ -24,10 +24,10 @@ Django와 MySQL을 사용한 의약품 정보 관리 웹사이트입니다.
 
 ## 🛠 기술 스택
 
-- **Backend**: Django 6.0.1
+- **Backend**: Django 5.0+
 - **Database**: MySQL (또는 SQLite for development)
 - **Frontend**: Bootstrap 5.3.0
-- **Language**: Python 3.12+
+- **Language**: Python 3.10+
 
 ## 📦 설치 방법
 
@@ -77,8 +77,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'med3_eun3a',
-        'USER': 'your_user',
-        'PASSWORD': 'your_password',
+        'USER': 'your_mysql_username',
+        'PASSWORD': 'your_secure_password',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
@@ -87,6 +87,8 @@ DATABASES = {
     }
 }
 ```
+
+**보안 참고**: 프로덕션 환경에서는 비밀번호를 환경 변수로 관리하세요.
 
 ### 5. 마이그레이션 실행
 
@@ -103,12 +105,14 @@ python manage.py createsuperuser
 
 ### 7. (선택사항) 샘플 데이터 생성
 
+**⚠️ 개발 환경 전용**: 이 스크립트는 개발/테스트 목적으로만 사용하세요.
+
 ```bash
 python create_sample_data.py
 ```
 
 이 스크립트는 다음을 생성합니다:
-- 관리자 계정: admin / admin123
+- 관리자 계정: admin / admin123 (⚠️ 프로덕션에서는 즉시 변경 필요)
 - 테스트 사용자: testuser / test123
 - 12개의 샘플 의약품 정보
 - 3개의 샘플 게시글

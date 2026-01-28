@@ -11,7 +11,10 @@ def medicine_list(request):
     search_type = request.GET.get('search_type', '')
     search_query = request.GET.get('search', '')
     
-    if search_type and search_query:
+    # 검색 타입 검증
+    valid_search_types = ['성분명', '회사명', '효능']
+    
+    if search_type in valid_search_types and search_query:
         if search_type == '성분명':
             medicines = medicines.filter(성분명__icontains=search_query)
         elif search_type == '회사명':
@@ -24,18 +27,10 @@ def medicine_list(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
-    # 검색용 드롭다운 데이터
-    성분_list = Medicine.objects.values_list('성분명', flat=True).distinct().order_by('성분명')
-    회사_list = Medicine.objects.values_list('회사명', flat=True).distinct().order_by('회사명')
-    효능_list = Medicine.objects.values_list('효능', flat=True).distinct()[:20]  # 효능은 텍스트가 길어서 제한
-    
     context = {
         'page_obj': page_obj,
         'search_type': search_type,
         'search_query': search_query,
-        '성분_list': 성분_list,
-        '회사_list': 회사_list,
-        '효능_list': 효능_list,
     }
     return render(request, 'medicine/list.html', context)
 
